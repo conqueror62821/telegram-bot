@@ -5,6 +5,7 @@ from Dwelling import Dwelling
 
 class AirbnbScrapper():
     BASE_URL = 'https://www.airbnb.cl/s'
+    BASE_URL_DETAIL = 'https://www.airbnb.cl'
 
     def __init__(self, location,min_beds=None,min_bathrooms=None,min_bedrooms=None,price_min=None,price_max=None):
         self.location:str = location
@@ -80,11 +81,12 @@ class AirbnbScrapper():
         description = self._get_value_or_none(container.find('span',class_=['t6mzqp7','dir','dir-ltr'], attrs={'data-testid': 'listing-card-name'}))
         # Stars
         stars = self._get_value_or_none(container.find('span',class_=['r1dxllyb','dir','dir-ltr'], attrs={'aria-hidden': 'true'}))
-    
+        # Url link
+        url = '{}{}'.format(self.BASE_URL_DETAIL,container.find('a',class_=['l1j9v1wn','bn2bl2p','dir','dir-ltr'])['href']) 
         # Price
         price_container = container.find('div',class_=['pquyp1l','dir','dir-ltr'])
         price_dict = self._get_price(price_container)
-        data = {'title':title,'description':description,'stars':stars}
+        data = {'title':title,'description':description,'stars':stars,'url':url}
         data.update(price_dict)
         return Dwelling(**data) 
 
@@ -101,17 +103,21 @@ class AirbnbScrapper():
         self._set_request()
         for container in self._get_dwelling_cards():
             dwelling = self._get_dwelling_info(container)
-            self.__dwellings.append(dwelling)
+            self.__dwellings.append(dwelling.to_dict())
         self._pagination()
 
     def get_number_pages(self):
         print(f'Nro total de paginas consultadas {self.__size}')
 
 
-    
 if __name__ == '__main__':
     x = AirbnbScrapper('Santiago')
     x.search()
-    x.get_number_pages()
-    print('Cantidad de viviendas ',len(x.dwellings))
-    print(str(x.dwellings[0]))
+    import pandas as pd
+    df = pd.DataFrame(x.dwellings)
+    stars_reviews_filter = (df['stars'] >= 3) & (df['reviews'] >= 10)
+    top_10 = df.loc[stars_reviews_filter].nlargest(10,'price')
+    print(top_10)
+    # Export to csv
+    df.to_csv('total_dwelling.csv')
+    top_10.to_csv('top_10.csv')
