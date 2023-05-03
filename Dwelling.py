@@ -1,8 +1,9 @@
 class Dwelling():
-    def __init__(self,title,description,stars,price,price_discount=None):
+    def __init__(self,title,description,stars,price,url,price_discount=None):
         self.title = title
         self.description = description
         self.stars = stars
+        self.url = url
         self.price = price
         self.price_discount = price_discount
 
@@ -13,6 +14,14 @@ class Dwelling():
     @title.setter
     def title(self,title):
         self.__title = title
+
+    @property
+    def url(self):
+        return self.__url
+
+    @url.setter
+    def url(self,url):
+        self.__url = url
 
     @property
     def description(self):
@@ -43,7 +52,7 @@ class Dwelling():
 
     @reviews.setter
     def reviews(self,reviews):
-        self.__reviews = reviews
+        self.__reviews = int(reviews)
 
     @property
     def price(self):
@@ -74,6 +83,8 @@ class Dwelling():
     def __str__(self) -> str:
         return f'Title {self.title} - Price {self.price}'
 
+    def to_dict(self) -> dict:
+        return {'title':self.title,'description':self.description,'stars':self.stars,'price':self.price,'price_discount':self.price_discount,'reviews':self.reviews,'url':self.url}
 
 if __name__ == '__main__':
     x = Dwelling(0,0,'Nuevo',0,'1')
