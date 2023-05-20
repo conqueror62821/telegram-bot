@@ -62,9 +62,9 @@ class Dwelling():
     def price(self,price):
         self.__price = None        
         if not price: return
-        string = price.replace('$','').replace(',','').replace('CLP','').strip()
-        if not string.isnumeric(): raise ValueError('El valor debe ser un número válido.')
-        self.__price = int(string)
+        value = price.replace('$','').replace(',','').replace('CLP','').strip()
+        if not value.isnumeric(): raise ValueError('El valor debe ser un número válido.')
+        self.__price = int(value)
 
 
     @property
@@ -85,8 +85,3 @@ class Dwelling():
 
     def to_dict(self) -> dict:
         return {'title':self.title,'description':self.description,'stars':self.stars,'price':self.price,'price_discount':self.price_discount,'reviews':self.reviews,'url':self.url}
-
-if __name__ == '__main__':
-    x = Dwelling(0,0,'Nuevo',0,'1')
-    print(x.stars)
-    print(x.reviews)
