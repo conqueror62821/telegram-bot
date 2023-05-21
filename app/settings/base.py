@@ -19,7 +19,7 @@ KAOMOJIS = ['(≧◡≦) ♡','♡(>ᴗ•)','૮ ˶ᵔ ᵕ ᵔ˶ ა']
 TELEGRAM = {
     'API_KEY' : config('API_KEY_TELEGRAM'),
     'CHAT_ID' : config('CHAT_ID_TELEGRAM'),
-    'WEBHOOK_URL' : '{}{}'.format(config('WEBHOOK_HOST')'/api/v1/webhook-messages') ,
+    'WEBHOOK_URL' : '{}{}'.format(config('WEBHOOK_HOST'),'/api/v1/webhook-messages') ,
 }
 
 
