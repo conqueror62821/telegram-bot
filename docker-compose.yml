@@ -1,0 +1,14 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: docker/development/
+    image: airbnb-backend-bot:latest
+    container_name: airbnb-backend-bot
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    environment:
+      - DEBUG=True
+    command: python app.py
