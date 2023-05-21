@@ -19,7 +19,7 @@ KAOMOJIS = ['(≧◡≦) ♡','♡(>ᴗ•)','૮ ˶ᵔ ᵕ ᵔ˶ ა']
 TELEGRAM = {
     'API_KEY' : config('API_KEY_TELEGRAM'),
     'CHAT_ID' : config('CHAT_ID_TELEGRAM'),
-    'WEBHOOK_URL' : 'https://f786-2800-150-126-a1e-5849-a7f9-f0a-ba8b.ngrok-free.app{}'.format('/api/v1/webhook-messages') ,
+    'WEBHOOK_URL' : '{}{}'.format(config('WEBHOOK_HOST')'/api/v1/webhook-messages') ,
 }
 
 
