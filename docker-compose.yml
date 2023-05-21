@@ -3,12 +3,12 @@ services:
   backend:
     build:
       context: docker/development/
-    image: airbnb-backend-bot:latest
-    container_name: airbnb-backend-bot
+    image: scraper-backend-bot:latest
+    container_name: scraper-backend-bot
     volumes:
       - .:/app
     ports:
       - 8000:8000
     environment:
       - DEBUG=True
-    command: python app.py
+    command: python app/main.py
