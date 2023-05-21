@@ -2,7 +2,8 @@ version: '3'
 services:
   backend:
     build:
-      context: docker/development/
+      context: .
+      dockerfile: Dockerfile.dev
     image: scraper-backend-bot:latest
     container_name: scraper-backend-bot
     volumes:
