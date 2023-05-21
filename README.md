@@ -15,7 +15,7 @@ The project consists of a Telegram bot that interacts with the user through cust
 - 1. Clone the repository:
 
 ```bash
-    git clone https://github.com/tu-usuario/nombre-del-proyecto.git
+    git clone https://github.com/4lequinn/telegram-bot-scraper.git
 ```
 - 2. Go to project path:
 
