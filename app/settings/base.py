@@ -48,3 +48,9 @@ COMMANDS = {
 
 
 
+TAGS_METADATA = [
+    {
+        "name": "webhooks",
+        "description": "webhooks endpoints"
+    }
+]
