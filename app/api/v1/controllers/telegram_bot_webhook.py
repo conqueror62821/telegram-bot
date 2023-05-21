@@ -3,7 +3,12 @@ import telegram
 from core.routers import webhooks_router
 
 
-@webhooks_router.post("/webhook-messages")
+@webhooks_router.post(
+    "/webhook-messages",
+    tags=["webhooks"],
+    response_model=None,
+    description="Telegam messages webhook.",
+)
 async def webhook(request: Request):
     update = telegram.Update.de_json(await request.json(), bot)
     message = update.message
