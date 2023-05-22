@@ -6,8 +6,8 @@ import os
 
 def main():
     os.environ.setdefault('BOT_SETTINGS_MODULE', 'settings.development')
-    from core import run_server
-    run_server()
+    from core import start
+    start()
 
 
 if __name__ == '__main__':

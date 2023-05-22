@@ -2,15 +2,15 @@ from fastapi import FastAPI
 import uvicorn
 from starlette.responses import RedirectResponse
 from core.manage import settings
-from core.initializers import *
 from api.v1.controllers.telegram_bot_webhook import webhooks_router
+from fastapi.middleware.cors import CORSMiddleware
 
-# Server APP
-def run_server(): uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)
+origins = ["http://0.0.0.0:8000"]
 
 
-# Start APP 
-app = FastAPI(
+def init_app():
+
+    app = FastAPI(
         title="Telegram Bot API",
         description="a REST API using python for Telegram Bot",
         version="0.0.1",
@@ -18,20 +18,41 @@ app = FastAPI(
         docs_url="/api-docs",
     )
 
-# Redirect
-@app.get("/", include_in_schema=False)
-async def root():
-    return RedirectResponse(url="/api-docs")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"]
+    )
 
-# Set global events
-async def startup_event():
-    print('-- START API BOT TELEGRAM --')
+    # Redirect
+    @app.get("/", include_in_schema=False)
+    async def root():
+        return RedirectResponse(url="/api-docs")
 
-# execute global events
-@app.on_event("startup")
-async def on_startup():
-    await startup_event()
+    # Set global events
+    async def startup_event():
+        print('-- START API BOT TELEGRAM --')
 
-# Routers
-app.include_router(webhooks_router, prefix="/api/v1")
+    # execute global events
+    @app.on_event("startup")
+    async def on_startup():
+        await startup_event()
 
+    @app.on_event("shutdown")
+    async def shutdown():
+        print('Shutdown :c')
+
+    # Routers
+    app.include_router(webhooks_router, prefix="/api/v1")
+
+    return app
+
+
+
+app = init_app()
+
+
+def start():
+    uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)
