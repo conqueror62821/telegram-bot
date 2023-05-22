@@ -2,6 +2,8 @@ from fastapi import Request
 import telegram
 from core.routers import webhooks_router
 from models.telegram_custom_bot import TelegramCustomBot
+import websockets
+import json
 
 bot = TelegramCustomBot()
 
@@ -12,24 +14,20 @@ bot = TelegramCustomBot()
     description="Telegram messages webhook.",
 )
 async def webhook(request: Request):
-    print("BOTSITO",bot)
-
     update = telegram.Update.de_json(await request.json(), bot)
     message = update.message
 
-    print(message.message_id)
     # Skip messages
     if message.message_id == bot.last_message_id: return
     
     # Process
     bot.last_message_id = message.message_id
     bot.current_message = message
-    #from datetime import datetime
 
-    print(bot.current_message.date)
-    print(bot.current_message.from_user.first_name)
-    print(bot.current_message.from_user.last_name)
-    print(bot.current_message.text)
-    await bot.send_message()
+    data = {'response' : True,'chat_id': bot.last_message_id}
+
+    # send data to WebSocket
+    async with websockets.connect('ws://0.0.0.0:8000/ws') as websocket:
+        await websocket.send(json.dumps(data))
 
     return {'status' : 'OK'}

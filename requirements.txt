@@ -6,3 +6,4 @@ python-decouple
 fastapi
 uvicorn
 python-dotenv
+websockets

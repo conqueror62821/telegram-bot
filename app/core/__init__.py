@@ -1,9 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket 
 import uvicorn
 from starlette.responses import RedirectResponse
 from core.manage import settings
 from api.v1.controllers.telegram_bot_webhook import webhooks_router
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.websockets import WebSocketDisconnect
+import json
 
 origins = ["http://0.0.0.0:8000"]
 
@@ -43,6 +45,25 @@ def init_app():
     @app.on_event("shutdown")
     async def shutdown():
         print('Shutdown :c')
+
+    @app.websocket("/ws")
+    async def websocket_endpoint(websocket: WebSocket):
+        try:
+            await websocket.accept()
+            from api.v1.controllers.telegram_bot_webhook import bot
+
+            while True:
+
+                # Get data
+                data_text = await websocket.receive_text()
+                data_dict = json.loads(data_text)
+
+                # Validate
+                if data_dict.get('response',False) and int(data_dict.get('chat_id',0)) == bot.last_message_id:
+                    await bot.send_message()
+
+        except WebSocketDisconnect as e:
+            print("Diconnect websocket:", e)
 
     # Routers
     app.include_router(webhooks_router, prefix="/api/v1")
