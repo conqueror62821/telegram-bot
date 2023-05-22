@@ -6,6 +6,8 @@ from api.v1.controllers.telegram_bot_webhook import webhooks_router
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.websockets import WebSocketDisconnect
 import json
+from core.logger import logger
+
 
 origins = ["http://0.0.0.0:8000"]
 
@@ -34,8 +36,7 @@ def init_app():
         return RedirectResponse(url="/api-docs")
 
     # Set global events
-    async def startup_event():
-        print('-- START API BOT TELEGRAM --')
+    async def startup_event(): pass
 
     # execute global events
     @app.on_event("startup")
@@ -43,8 +44,7 @@ def init_app():
         await startup_event()
 
     @app.on_event("shutdown")
-    async def shutdown():
-        print('Shutdown :c')
+    async def shutdown(): pass
 
     @app.websocket("/ws")
     async def websocket_endpoint(websocket: WebSocket):
@@ -61,6 +61,7 @@ def init_app():
                 # Validate
                 if data_dict.get('response',False) and int(data_dict.get('chat_id',0)) == bot.last_message_id:
                     await bot.send_message()
+                    logger.info(f'Send message to {bot.current_message.from_user.first_name} {bot.current_message.from_user.last_name}.')
 
         except WebSocketDisconnect as e:
             print("Diconnect websocket:", e)
@@ -76,4 +77,5 @@ app = init_app()
 
 
 def start():
+    logger.info('Start server')
     uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)

@@ -4,6 +4,7 @@ from core.routers import webhooks_router
 from models.telegram_custom_bot import TelegramCustomBot
 import websockets
 import json
+from core.logger import logger
 
 bot = TelegramCustomBot()
 
@@ -25,6 +26,8 @@ async def webhook(request: Request):
     bot.current_message = message
 
     data = {'response' : True,'chat_id': bot.last_message_id}
+    
+    logger.info(f'message received from {bot.current_message.from_user.first_name} {bot.current_message.from_user.last_name}.')
 
     # send data to WebSocket
     async with websockets.connect('ws://0.0.0.0:8000/ws') as websocket:

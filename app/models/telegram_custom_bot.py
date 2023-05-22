@@ -1,7 +1,7 @@
 from telegram import Bot
 from core.manage import settings 
 import asyncio
-import time
+from core.logger import logger
 
 class TelegramCustomBot:
     __instance = None
@@ -16,6 +16,7 @@ class TelegramCustomBot:
             cls.__instance = super().__new__(cls)
             cls.__instance.bot = Bot(token=settings.TELEGRAM.get('API_KEY'))
             cls.__LOOP.create_task(cls._set_url()) # Thread
+            logger.info('Bot started')
         return cls.__instance
 
     def __init__(self, last_message_id=None):
