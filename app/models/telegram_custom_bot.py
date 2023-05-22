@@ -9,7 +9,6 @@ class TelegramCustomBot:
 
     @staticmethod
     async def _set_url():
-        print('RESETEO')
         await TelegramCustomBot.__instance.bot.set_webhook(url=settings.TELEGRAM.get('WEBHOOK_URL'))
 
     def __new__(cls, *args, **kwargs):
