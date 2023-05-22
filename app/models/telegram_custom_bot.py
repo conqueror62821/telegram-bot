@@ -77,7 +77,7 @@ class TelegramCustomBot:
         return message
 
     def _get_template(self):
-        return COMMANDS.get(self.__command)
+        return settings.COMMANDS.get(self.__command)
 
     async def send_message(self):
         self.command = self.current_message.text
