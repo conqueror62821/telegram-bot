@@ -2,7 +2,11 @@ from fastapi import FastAPI
 import uvicorn
 from starlette.responses import RedirectResponse
 from core.manage import settings
+from core.initializers import *
 from api.v1.controllers.telegram_bot_webhook import webhooks_router
+
+# Server APP
+def run_server(): uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)
 
 
 # Start APP 
@@ -19,7 +23,15 @@ app = FastAPI(
 async def root():
     return RedirectResponse(url="/api-docs")
 
+# Set global events
+async def startup_event():
+    print('-- START API BOT TELEGRAM --')
+
+# execute global events
+@app.on_event("startup")
+async def on_startup():
+    await startup_event()
+
 # Routers
 app.include_router(webhooks_router, prefix="/api/v1")
 
-def run_server(): uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)
