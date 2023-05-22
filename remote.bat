@@ -1,23 +1,26 @@
 @echo off
 
 REM pull request
-echo ^[[32mGit pull..^[[0m
+echo Git pull..
 git pull
 if %errorlevel% neq 0 (
-    echo ^[[31;47mError when doing git pull :c^[[0m
+    echo Error when doing git pull :c
     pause
     exit /b
 )
+
+cls
 
 REM push request
-echo ^[[32mGit push..^[[0m
+echo Git push..
 git push
 if %errorlevel% neq 0 (
-    echo ^[[31;47mError when doing git push :c^[[0m
+    echo Error when doing git push :c
     pause
     exit /b
 )
+cls
 
 REM successful
-echo ^[[Operations carried out successfully :D^[[0m
+echo Operations carried out successfully :D
 pause

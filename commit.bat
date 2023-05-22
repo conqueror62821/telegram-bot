@@ -8,4 +8,5 @@ set /p comment="Enter comment: "
 git commit -m "%comment%"
 
 REM Successfully message
-echo ^[[Commit successfully :D^[[0m
+cls
+echo Commit successfully :D
