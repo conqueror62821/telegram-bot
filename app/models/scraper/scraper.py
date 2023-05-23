@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
-from Dwelling import Dwelling
+from models.dwelling import Dwelling
 
 class AirbnbScrapper():
     BASE_URL = 'https://www.airbnb.cl/s'
@@ -108,16 +108,3 @@ class AirbnbScrapper():
 
     def get_number_pages(self):
         print(f'Nro total de paginas consultadas {self.__size}')
-
-
-if __name__ == '__main__':
-    x = AirbnbScrapper('Santiago')
-    x.search()
-    import pandas as pd
-    df = pd.DataFrame(x.dwellings)
-    stars_reviews_filter = (df['stars'] >= 3) & (df['reviews'] >= 10)
-    top_10 = df.loc[stars_reviews_filter].nlargest(10,'price')
-    print(top_10)
-    # Export to csv
-    df.to_csv('total_dwelling.csv')
-    top_10.to_csv('top_10.csv')
