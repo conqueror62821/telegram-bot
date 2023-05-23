@@ -63,9 +63,9 @@ class TelegramCustomBot:
 
     def _get_failed_message(self,attempts):
         switch = {
-            1: 'test',
-            2: 'test',
-            3: 'test',
+            1: 'Oye aweonao ve los comandos con !help :)',
+            2: 'Tonto ctm q te dije',
+            3: '._.',
             4: 'test',
             5: 'test'
         }
