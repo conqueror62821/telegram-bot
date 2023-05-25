@@ -7,6 +7,16 @@ class TelegramCustomBot:
     __instance = None
     __LOOP = asyncio.get_event_loop()
 
+    @classmethod
+    def _set_help_command_template(cls):
+        template = settings.HELP_COMMAND_HEADER + '\n'
+        for key in settings.COMMANDS.keys():
+            text = '{}: {}\n'.format(key,settings.COMMANDS.get(key).get('description')) 
+            template = template + text
+
+        template = template + settings.HELP_COMMAND_FOOTER
+        settings.COMMANDS['!help']['template'] = template
+
     @staticmethod
     async def _set_url():
         await TelegramCustomBot.__instance.bot.set_webhook(url=settings.TELEGRAM.get('WEBHOOK_URL'))
@@ -16,6 +26,7 @@ class TelegramCustomBot:
             cls.__instance = super().__new__(cls)
             cls.__instance.bot = Bot(token=settings.TELEGRAM.get('API_KEY'))
             cls.__LOOP.create_task(cls._set_url()) # Thread
+            cls._set_help_command_template()
             logger.info('Bot started')
         return cls.__instance
 
@@ -62,22 +73,23 @@ class TelegramCustomBot:
         return self._get_failed_message(self.__attempts)
 
     def _get_failed_message(self,attempts):
+        # TODO: Refac or extend 
         switch = {
-            1: 'Oye aweonao ve los comandos con !help :)',
-            2: 'Tonto ctm q te dije',
-            3: '._.',
+            1: 'test',
+            2: 'test',
+            3: 'test',
             4: 'test',
             5: 'test'
         }
         message = switch.get(attempts,None)
 
         if not message: 
-            message = 'Superaste el limite de aweonamiento'
+            message = 'Last message'
             self._reset_failed_attempts()
         return message
 
     def _get_template(self):
-        return settings.COMMANDS.get(self.__command)
+        return settings.COMMANDS.get(self.__command).get('template')
 
     async def send_message(self):
         self.command = self.current_message.text
