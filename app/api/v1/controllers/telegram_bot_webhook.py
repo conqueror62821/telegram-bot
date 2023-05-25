@@ -1,21 +1,27 @@
-from fastapi import Request
+from fastapi import Request,APIRouter,status
 import telegram
-from core.routers import webhooks_router
-from models.telegram_custom_bot import TelegramCustomBot
 import websockets
 import json
 from core.logger import logger
+from models.telegram_custom_bot import TelegramCustomBot
+from fastapi.responses import Response
 
 bot = TelegramCustomBot()
 
-@webhooks_router.post(
-    "/webhook-messages",
-    tags=["webhooks"],
+router = APIRouter(
+    prefix='/webhooks',
+    tags=['Webhooks v1'],
+    responses={status.HTTP_404_NOT_FOUND: {'message': 'Not found'}}
+)
+
+@router.post(
+    "/telegram-messages",
     response_model=None,
     description="Telegram messages webhook.",
 )
 async def webhook(request: Request):
     update = telegram.Update.de_json(await request.json(), bot)
+
     message = update.message
 
     # Skip messages
@@ -32,5 +38,7 @@ async def webhook(request: Request):
     # send data to WebSocket
     async with websockets.connect('ws://0.0.0.0:8000/ws') as websocket:
         await websocket.send(json.dumps(data))
+    return Response(status_code=204)
 
-    return {'status' : 'OK'}
+
+
