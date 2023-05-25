@@ -3,10 +3,9 @@ import telegram
 import websockets
 import json
 from core.logger import logger
-from models.telegram_custom_bot import TelegramCustomBot
 from fastapi.responses import Response
+from core.init_bot import bot
 
-bot = TelegramCustomBot()
 
 router = APIRouter(
     prefix='/webhooks',
