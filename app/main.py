@@ -6,7 +6,7 @@ import os
 
 def main():
     os.environ.setdefault('BOT_SETTINGS_MODULE', 'settings.development')
-    from core import start
+    from core import start 
     start()
 
 
