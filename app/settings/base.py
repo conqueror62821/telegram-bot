@@ -1,6 +1,7 @@
 from decouple import config
 from .command_templates import *
 from .openapi_metadata import *
+from .commands import *
 
 DEBUG = config('DEBUG',cast=bool,default=True)
 
@@ -21,12 +22,4 @@ TELEGRAM = {
 }
 
 
-# TODO: IN MAINTENANCE
-
-
-
-COMMANDS = {
-    '!help' : TEMPLATES.get('!help'),
-    '!x4leqxinn' : TEMPLATES.get('!x4leqxinn'),
-}
 
