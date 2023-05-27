@@ -9,6 +9,29 @@ from .global_events import setup_global_events
 from .websockets import setup_ws
 from .routers import setup_routes
 
+
+from datetime import datetime, timedelta
+from apscheduler.schedulers.background import BackgroundScheduler
+
+
+def task():
+    logger.info('Inicio de la tarea')
+    # Aquí puedes definir la lógica de tu tarea programada
+    print("¡Tarea programada ejecutada!")
+
+# Crear una instancia del planificador
+scheduler = BackgroundScheduler()
+
+# Calcular el tiempo de inicio (5 minutos en el futuro)
+start_time = datetime.now() + timedelta(minutes=1)
+
+# Agregar la tarea programada al planificador con un retraso de inicio
+scheduler.add_job(task, 'interval', minutes=1, start_date=start_time)
+
+scheduler.start()
+
+
+
 origins = ["http://0.0.0.0:8000"]
 
 app = FastAPI(
