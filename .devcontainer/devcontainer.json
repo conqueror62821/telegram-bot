@@ -1,0 +1,20 @@
+{
+  "name": "Telegram bot backend",
+  "dockerComposeFile": "../docker-compose.yml",
+  "workspaceFolder": "/workspace",
+  "service": "backend",
+  "overrideCommand": false,
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash"
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-azuretools.vscode-docker",
+    "TabNine.tabnine-vscode",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "adpyke.codesnap",
+  ]
+}
+
