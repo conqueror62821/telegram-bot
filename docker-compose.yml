@@ -7,7 +7,7 @@ services:
     image: scraper-backend-bot:latest
     container_name: scraper-backend-bot
     volumes:
-      - .:/app
+      - .:/workspace
     ports:
       - 8000:8000
     environment:
