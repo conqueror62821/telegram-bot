@@ -16,9 +16,9 @@ app = FastAPI(
     description="a REST API using python for Telegram Bot",
     version="0.0.1",
     openapi_tags=settings.TAGS_METADATA,
-    openapi_url="/1",
-    docs_url='/2',
-    redoc_url='/3',
+    openapi_url="/openapi",
+    docs_url='/docs',
+    redoc_url='/redocs',
 )
 
 app.add_middleware(
