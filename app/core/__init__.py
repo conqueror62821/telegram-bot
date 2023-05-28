@@ -18,9 +18,18 @@ from core.logger import logger
 class CustomFastAPI(FastAPI):
 
     def __init__(self):
-        super().__init__()
+        kwargs = \
+        {
+            'title' : 'Telegram Bot API',
+            'description' : 'a REST API using python for Telegram Bot',
+            'version' : '0.0.1',
+            'openapi_tags' : settings.TAGS_METADATA,
+            'openapi_url' : '/openapi',
+            'docs_url' : '/docs',
+            'redoc_url' : '/redocs',
+        }     
+        super().__init__(**kwargs)
         self.configure()
-
     
     """GETTERS"""
     @property
@@ -44,14 +53,7 @@ class CustomFastAPI(FastAPI):
         self.setup_ws()
         self.init_scheduler()
 
-    def setup_metadata(self):
-        self.title="Telegram Bot API",
-        self.description="a REST API using python for Telegram Bot",
-        self.version="0.0.1",
-        self.openapi_tags=settings.TAGS_METADATA,
-        self.openapi_url="/openapi",
-        self.docs_url='/docs',
-        self.redoc_url='/redocs',
+    def setup_metadata(self): pass
 
     def setup_server_timezone(self):
         tz = settings.TIMEZONE
