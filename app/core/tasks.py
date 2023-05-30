@@ -1,4 +1,3 @@
-from . init_bot import bot
 import asyncio
 from core.logger import logger
 
