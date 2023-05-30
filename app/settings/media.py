@@ -22,5 +22,6 @@ MEDIA_URLS = [
     'https://i.pinimg.com/564x/f0/b6/69/f0b66956a76a9e09d152ca4f95886c91.jpg',
     'https://i.pinimg.com/564x/d5/6a/41/d56a418e5108d2135d3a33a89f659b9f.jpg',
     'https://i.redd.it/h0th0zc0zoka1.png?s=a685b5cde508bd0a8bd8325a7010c0a5ed386f2a',
+    'https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.relyonhorror.com%2Fwp-content%2Fuploads%2F2018%2F11%2FMonikaBlueScreen.jpg&tbnid=YKoHOEuqB-0q1M&vet=10CF4QMyiSAWoXChMIkLXDjpKc_wIVAAAAAB0AAAAAEAg..i&imgrefurl=https%3A%2F%2Fwww.relyonhorror.com%2Farticles%2Fmonika-real-horror-doki-doki-literature-club%2F&docid=HT7YMnmTEa6sMM&w=800&h=450&q=monika&client=firefox-b-d&ved=0CF4QMyiSAWoXChMIkLXDjpKc_wIVAAAAAB0AAAAAEAg',
     
 ]
