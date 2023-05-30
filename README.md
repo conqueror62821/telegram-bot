@@ -38,7 +38,7 @@ The project consists of a Telegram bot that interacts with the user through cust
 
 ## Usage
 
-- 1. Ejecuta la aplicación
+- 1. Run app
 ```bash
     python app/main.py
 ```
