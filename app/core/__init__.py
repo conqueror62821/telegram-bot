@@ -4,7 +4,6 @@ from core.manage import settings
 from fastapi.middleware.cors import CORSMiddleware
 from core.logger import logger
 from apscheduler.schedulers.background import BackgroundScheduler
-from . init_bot import bot
 import asyncio
 import os
 import time
@@ -13,7 +12,6 @@ from fastapi import WebSocket,FastAPI
 from starlette.websockets import WebSocketDisconnect
 import json
 from core.logger import logger
-
 
 class CustomFastAPI(FastAPI):
 
@@ -44,16 +42,14 @@ class CustomFastAPI(FastAPI):
 
     def configure(self):
         # Config app
-        self.setup_metadata()
         self.setup_server_timezone()
         self.setup_middlewares()
         self.setup_base_routes()
         self.setup_routes()
         self.setup_events()
-        self.setup_ws()
-        self.init_scheduler()
+        #self.setup_ws()
+        #self.init_scheduler()
 
-    def setup_metadata(self): pass
 
     def setup_server_timezone(self):
         tz = settings.TIMEZONE
@@ -94,21 +90,25 @@ class CustomFastAPI(FastAPI):
     def set_task_scheduler(self):
         self.scheduler = BackgroundScheduler()
 
-    def init_scheduler(self):
+    def init_scheduler(self): pass
+    """
         self.set_task_scheduler()
         from core.tasks import exec_async
         self.scheduler.add_job(exec_async,'interval', minutes=1)
         self.scheduler.start()
         logger.info('TASK SCHEDULER RUNNED')
+    """
 
     def setup_events(self):
         """GLOBAL EVENTS"""
         @self.on_event("startup")
-        async def startup_event(): pass
+        async def startup_event():
+            logger.info('RUN SERVER')
 
         @self.on_event("shutdown")
         async def shutdown():
-            self.scheduler.shutdown()
+            logger.info('SHUTDOWN SCHEDULER')
+            #self.scheduler.shutdown()
 
     def setup_ws(self):
         @self.websocket("/ws")
@@ -116,24 +116,20 @@ class CustomFastAPI(FastAPI):
             try:
                 await websocket.accept()
 
-                while True:
+                while True: pass
                     # Get data
-                    data_text = await websocket.receive_text()
-                    data_dict = json.loads(data_text)
+                    #data = await websocket.receive_text()
+                    #print('a',data,type(data))
+                    
 
-                    # Validate
-                    if data_dict.get('response',False) and int(data_dict.get('chat_id',0)) == bot.last_message_id:
-                        await bot.send_photo()
-                        ##await bot.send_warning()
-                        logger.info(f'Send message to {bot.current_message.from_user.first_name} {bot.current_message.from_user.last_name}.')
-
+ 
             except WebSocketDisconnect as e:
                 print("Diconnect websocket:", e)
 
 
-
+    
 app = CustomFastAPI()
 
+
 def start():
-    logger.info('Start server')
     uvicorn.run('core:app',host=settings.HOST,port=8000,reload=True)
