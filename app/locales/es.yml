@@ -1,0 +1,23 @@
+api:
+  v1:
+    controllers:
+      bot:
+        messages:
+          sent:
+            text:
+              successfully: "Mensaje enviado con exito."
+              error: "El mensaje no se pudo enviar."
+            photo:
+              successfully: "Foto enviada con exito."
+              error: "La foto no se pudo enviar."
+        webhook:
+            successfully: "Webhook establecido con exito."
+            error: "El webhook no se pudo establecer."
+models:
+  telegram_handler:
+    commands:
+      x4leqxinn:
+        description: "Mi creador :3"
+      help:
+        description: "Lista de comandos"
+
