@@ -1,6 +1,5 @@
 from fastapi import Request,APIRouter,status,HTTPException,UploadFile,File,Form
 import telegram
-import websockets
 import json
 from core.logger import logger
 from fastapi.responses import Response

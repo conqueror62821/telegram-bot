@@ -9,7 +9,6 @@ import os
 import time
 from fastapi.responses import RedirectResponse
 from fastapi import WebSocket,FastAPI
-from starlette.websockets import WebSocketDisconnect
 import json
 from core.logger import logger
 
