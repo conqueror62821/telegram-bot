@@ -77,13 +77,15 @@ class TelegramHandler:
             await settings.COMMANDS[command]['function'](self.bot,self.current_message.chat_id)
             
 
+    def _verify_command(self,command: str):
+        if "@" in command: return command.split("@")[0]
+        return  command
 
 
     async def _handle_commands(self):
         found = False
-
         for command in self.__commands:
-            if command.command == self.current_message.text: 
+            if command.command == self._verify_command(self.current_message.text).lower(): 
                 found = True 
                 break
         
@@ -113,12 +115,15 @@ class TelegramHandler:
     async def handle_message(self, update: Update):
         # Set current message update
         self.current_message = update.message
+        self.user = None
 
-        print('MESSAGE')
-        print(self.current_message)
-        self.user = update.message.from_user
-        print('USUARIO')
-        print(self.user)
+        try:
+            self.user = update.message.from_user
+            print('HAY USER')
+        except AttributeError:
+            print(update.message)
+            print('No hay user')
+        
         self._verify_message()
 
         # Command message
