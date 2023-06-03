@@ -4,12 +4,10 @@ from core.manage import settings
 from fastapi.middleware.cors import CORSMiddleware
 from core.logger import logger
 from apscheduler.schedulers.background import BackgroundScheduler
-import asyncio
 import os
 import time
 from fastapi.responses import RedirectResponse
 from fastapi import WebSocket,FastAPI
-import json
 from core.logger import logger
 
 class CustomFastAPI(FastAPI):

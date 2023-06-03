@@ -1,10 +1,9 @@
-from fastapi import Request,APIRouter,status,HTTPException,UploadFile,File,Form
-import telegram
+from fastapi import Request,APIRouter,status,HTTPException
 import json
 from core.logger import logger
 from fastapi.responses import Response
 from core.manage import settings 
-from pydantic import BaseModel, validator,root_validator
+from pydantic import BaseModel,root_validator
 from typing import Optional
 from telegram import Update
 from telegram.ext import *
@@ -42,6 +41,7 @@ router = APIRouter(
 )
 async def webhook(request: Request):
     update = Update.de_json(await request.json(), telegram_app.bot)
+    print(update)
     response = await telegram_app.handle_message(update)
     if not response: raise HTTPException(status_code=400, detail="The request could not be processed")
     return Response(status_code=204)

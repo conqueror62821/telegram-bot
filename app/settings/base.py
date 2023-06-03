@@ -21,14 +21,6 @@ TELEGRAM = {
     'WEBHOOK_URL' : config('WEBHOOK_URL'),
 }
 
-
-GIPHY = {
-    'API_KEY' : config('GIPHY_API_KEY'),
-    'GIF_BASE_URL' : 'https://api.giphy.com/v1/gifs',
-    'STICKER_BASE_URL' : 'https://api.giphy.com/v1/stickers',
-}
-
-
 TIMEZONE = 'Chile/Continental'
 
 
